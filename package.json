@@ -10,6 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "fs": "0.0.1-security",
+    "node-schedule": "^1.2.0",
     "slackbots": "^1.0.2",
     "sqlite3": "^3.1.8",
     "util": "^0.10.3"
