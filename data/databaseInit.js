@@ -35,6 +35,7 @@ inputStream.on('end',function(){
     function ensureDbExist(){
         var db = new sqlite3.Database(outputFile);
         db.serialize();
+        db.run('CREATE TABLE IF NOT EXISTS info (name TEXT PRIMARY KEY, val TEXT DEFAULT NULL)');
         db.run('CREATE TABLE IF NOT EXISTS jokes (id INTEGER PRIMARY KEY, joke TEXT, used INTEGER DEFAULT 0)');
         db.run('CREATE INDEX IF NOT EXISTS jokes_used_idx on jokes(used)');
         return db;
@@ -51,7 +52,7 @@ inputStream.on('end',function(){
 
             dbHandle.run('INSERT INTO jokes(joke) VALUES (?)', line, function(err){
                 if(err){
-                    console.log(err);
+                    console.error(err);
                     jokesWritten--;
                 } 
             });
