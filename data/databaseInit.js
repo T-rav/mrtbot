@@ -29,16 +29,14 @@ inputStream.on('readable',function(){
 inputStream.on('end',function(){
     
     var dbHandle = ensureDbExist();
-    var writtenJokes = writeJokestoDb(dbHandle);
-    console.log("Wrote [ " + writtenJokes + " ] jokes to the file [ " + outputFile + " ]");
+    var jokesWritten = writeJokestoDb(dbHandle);
+    console.log("Wrote [ " + jokesWritten + " ] jokes to the file [ " + outputFile + " ]");
 
     function ensureDbExist(){
         var db = new sqlite3.Database(outputFile);
-        if(!fs.existsSync(outputFile)){
-            db.serialize();
-            db.run('CREATE TABLE IF NOT EXISTS jokes (id INTEGER PRIMARY KEY, joke TEXT, used INTEGER DEFAULT 0)');
-            db.run('CREATE INDEX jokes_used_idx on jokes(used)');
-        }
+        db.serialize();
+        db.run('CREATE TABLE IF NOT EXISTS jokes (id INTEGER PRIMARY KEY, joke TEXT, used INTEGER DEFAULT 0)');
+        db.run('CREATE INDEX IF NOT EXISTS jokes_used_idx on jokes(used)');
         return db;
     }
 
@@ -49,16 +47,18 @@ inputStream.on('end',function(){
         while(index > -1){
             var line = inputToProcess.substring(lastIndex,index);
             lastIndex = index + 1;
+            jokesWritten++;
+
             dbHandle.run('INSERT INTO jokes(joke) VALUES (?)', line, function(err){
                 if(err){
                     console.log(err);
-                }
-                jokesWritten++;
+                    jokesWritten--;
+                } 
             });
+
             index = inputToProcess.indexOf('\n', lastIndex);
         }
 
         return jokesWritten;
     }
-
 });
