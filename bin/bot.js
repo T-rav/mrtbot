@@ -1,14 +1,15 @@
 'use strict';
 
-var Bot = require('lib/MrTBot');
+var MrtBot = require('./lib/mrtbot');
 
-var botToken = process.env.BOT_APY_KEY;
+var botToken = process.env.BOT_API_KEY;
 
 var botInstance = new MrtBot({
     token: botToken,
-    name: 'Mr. T Bot',
+    name: 'mr.t',
     dbPath: 'data/mrtbot.db',
-    joinChannel: 'mrt_test',
+    joinChannel: 'mrt_test_channel',
+    cronSchedule: '0 30 10 * * 1-5'
 });
 
 botInstance.run();

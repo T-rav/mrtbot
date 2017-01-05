@@ -21,7 +21,7 @@ MrtBot.prototype.run = function(){
     var self = this;
 
     // schedule a joke to be sent in the morning
-    schedule.scheduleJob('0 30 10 * * 1-5', function(){
+    schedule.scheduleJob(self.settings.cronSchedule, function(){
         self.db.get('SELECT id, joke FROM jokes ORDER BY used ASC, RANDOM() LIMIT 1', function(err, record){
             if(err){
                 return console.error(err);
@@ -84,6 +84,7 @@ MrtBot.prototype.run = function(){
             return message.text.toLowerCase().indexOf('Mr. T') > -1 || message.text.toLowerCase().indexOf(self.settings.name) > -1;
         }
 
+        // see if we need to respond to the message
         if(isChatMessage(message) && isChannelConversation(message) && !isFromBot(message) && mentionsBot(message)){
             self.db.get('SELECT id, joke FROM jokes ORDER BY used ASC, RANDOM() LIMIT 1', function(err, record){
                 if(err){
