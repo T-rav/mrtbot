@@ -55,10 +55,9 @@ MrtBot.prototype.run = function(){
             var currentTime = (new Date()).toJSON();
 
             // this is a first run, post welcome message
-            if (!record) {
-                console.log("Post to " + self.settings.joinChannel); 
-                bot.postMessageToChannel(self.settings.joinChannel, '@channel I am here to Jibba Jabba while I pitty you.' +
-                '\n I tell jokes, but only very funny ones. Just type `Mr. T` or `' + self.settings.name + '!', self.params);
+            if (!record) { 
+                bot.postMessageToChannel(self.settings.joinChannel, 'I am here to Jibba Jabba while I pitty you.' +
+                '\n I tell jokes, but only very funny ones. Just type `Mr. T` or `' + self.settings.name + '`!', self.params);
                 return self.db.run('INSERT INTO info(name, val) VALUES("lastrun", ?)', currentTime);
             }
 
