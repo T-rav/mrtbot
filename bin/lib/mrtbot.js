@@ -80,7 +80,7 @@ MrtBot.prototype.run = function(){
             return message.username === self.user.name;
         }
         function mentionsBot(message){
-            return message.text.toLowerCase().indexOf('Mr. T') > -1 || message.text.toLowerCase().indexOf(self.settings.name) > -1;
+            return message.text.toLowerCase().indexOf('mr. t') > -1 || message.text.toLowerCase().indexOf(self.settings.name) > -1;
         }
 
         // see if we need to respond to the message
