@@ -1,0 +1,15 @@
+{
+  "name": "mrtbot",
+  "version": "0.9.0",
+  "description": "A slackbot that dispenses Mr.T related fun",
+  "main": "lib/mrtbot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Travis Frisinger",
+  "license": "ISC",
+  "dependencies": {
+    "slackbots": "^1.0.2",
+    "sqlite3": "^3.1.8"
+  }
+}
