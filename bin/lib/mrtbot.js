@@ -16,6 +16,13 @@ var MrtBot = function(settings){
     self.slackBot = new Slackbot(settings);    
 };
 
+MrtBot.prototype.printToLog = function(message){
+    var self = this;
+    if(self.settings.printToConsole){
+        console.log(message);
+    }
+}
+
 MrtBot.prototype.run = function(){
     var bot = this.slackBot;
     var self = this;
@@ -29,10 +36,12 @@ MrtBot.prototype.run = function(){
 
             bot.postMessageToChannel(self.settings.joinChannel, record.joke, self.params);
             self.db.run('UPDATE jokes SET used = used +1 WHERE id = ?', record.id);
+            self.printToLog("Finished running scheduled task joke");
         });
     }); 
     
     bot.on('start', function(){
+        self.printToLog("Started bot");
 
         // save user so we know to filter our own messages
         self.user = bot.users.filter(function (user) {
@@ -56,12 +65,11 @@ MrtBot.prototype.run = function(){
 
             // this is a first run, post welcome message
             if (!record) { 
+                self.printToLog("First run, printing welcome message");
                 bot.postMessageToChannel(self.settings.joinChannel, 'I am here to Jibba Jabba while I pitty you.' +
                 '\n I tell jokes, but only very funny ones. Just type `Mr. T` or `' + self.settings.name + '`!', self.params);
                 return self.db.run('INSERT INTO info(name, val) VALUES("lastrun", ?)', currentTime);
             }
-
-            // updates with new last running time
             self.db.run('UPDATE info SET val = ? WHERE name = "lastrun"', currentTime);
         });
     });
@@ -76,14 +84,12 @@ MrtBot.prototype.run = function(){
         }
         function isFromBot(message){
             if(!message) return false;
-            
             return message.username === self.user.name;
         }
         function mentionsBot(message){
             return message.text.toLowerCase().indexOf('mr. t') > -1 || message.text.toLowerCase().indexOf(self.settings.name) > -1;
         }
 
-        // see if we need to respond to the message
         if(isChatMessage(message) && isChannelConversation(message) && !isFromBot(message) && mentionsBot(message)){
             self.db.get('SELECT id, joke FROM jokes ORDER BY used ASC, RANDOM() LIMIT 1', function(err, record){
                 if(err){
@@ -95,9 +101,11 @@ MrtBot.prototype.run = function(){
                         return item.id === channelId;
                     })[0];
                 }
+
                 var channel = getChannel(message.channel);
                 bot.postMessageToChannel(channel.name, record.joke, self.params);
                 self.db.run('UPDATE jokes SET used = used +1 WHERE id = ?', record.id);
+                self.printToLog("Responed to prompt with joke from database.")
             });
         }
     });

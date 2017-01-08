@@ -1,6 +1,6 @@
 {
   "name": "mrtbot",
-  "version": "0.9.0",
+  "version": "0.9.5",
   "description": "A slackbot that dispenses Mr.T related fun",
   "main": "bin/bot.js",
   "scripts": {
