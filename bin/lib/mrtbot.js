@@ -18,7 +18,7 @@ var MrtBot = function(settings){
 
 MrtBot.prototype.printToLog = function(message){
     var self = this;
-    if(self.settings.printToConsole){
+    if(self.settings.printToLog){
         console.log(message);
     }
 }

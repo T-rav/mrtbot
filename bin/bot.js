@@ -9,7 +9,8 @@ var botInstance = new MrtBot({
     name: 'mr.t',
     dbPath: 'data/mrtbot.db',
     joinChannel: 'mrt_test_channel',
-    cronSchedule: '0 30 10 * * 1-5'
+    cronSchedule: '0 30 10 * * 1-5',
+    printToLog: true
 });
 
 botInstance.run();
