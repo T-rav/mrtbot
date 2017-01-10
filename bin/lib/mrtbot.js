@@ -19,7 +19,8 @@ var MrtBot = function(settings){
 MrtBot.prototype.printToLog = function(message){
     var self = this;
     if(self.settings.printToLog){
-        console.log(message);
+        var ts = new Date();
+        console.log(ts + " "+message);
     }
 }
 
@@ -29,7 +30,7 @@ MrtBot.prototype.run = function(){
 
     // schedule a joke to be sent in the morning
     schedule.scheduleJob(self.settings.cronSchedule, function(){
-    	self.printToLog("Finished running scheduled task joke");
+    	self.printToLog("Finished running scheduled task");
     }); 
     
     bot.on('start', function(){
