@@ -29,15 +29,7 @@ MrtBot.prototype.run = function(){
 
     // schedule a joke to be sent in the morning
     schedule.scheduleJob(self.settings.cronSchedule, function(){
-        self.db.get('SELECT id, joke FROM jokes ORDER BY used ASC, RANDOM() LIMIT 1', function(err, record){
-            if(err){
-                return console.error(err);
-            }
-
-            bot.postMessageToChannel(self.settings.joinChannel, record.joke, self.params);
-            self.db.run('UPDATE jokes SET used = used +1 WHERE id = ?', record.id);
-            self.printToLog("Finished running scheduled task joke");
-        });
+    	self.printToLog("Finished running scheduled task joke");
     }); 
     
     bot.on('start', function(){
