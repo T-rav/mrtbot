@@ -4,7 +4,7 @@ A silly 3 hour hack one night in Oman made this.
   
 To use:  
 0) create a bot by going to: https://_yourorganization_.slack.com/services/new/bot   
-1) create a custom emoji by going to: https://_yourorganization_.slack.com/customize/emoji
+1) create a custom emoji by going to: https://_yourorganization_.slack.com/customize/emoji  
 2) call it mrt and upload _emoji\mrt.png_  
 3) give it a cool customized name like _mr.t_ 
 4) click save integration  
