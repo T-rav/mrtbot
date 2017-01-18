@@ -2,13 +2,11 @@
 
 var MrtBot = require('./lib/mrtbot');
 
-var botToken = process.env.BOT_API_KEY;
-
 var botInstance = new MrtBot({
-    token: botToken,
+    token: '_bot_token_here',
     name: 'mr.t',
     dbPath: 'data/mrtbot.db',
-    joinChannel: 'mrt_test_channel',
+    joinChannel: '_chat_channel_here_',
     cronSchedule: '0 * 0,4,8,12,16,20 * * *',
     printToLog: false
 });
